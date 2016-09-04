@@ -6,5 +6,7 @@ sudo: required
 install: bash travis-setup.sh
 services:
 - docker
+before_script:
+    - export PATH=/anaconda/bin:$PATH
 script:
-    - /anaconda/bin/python conda_build_with_docker.py argh
+    - python conda_build_with_docker.py argh
