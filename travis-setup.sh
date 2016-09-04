@@ -17,6 +17,7 @@ export PATH="/anaconda:$PATH"
 conda install -y conda-build pip
 echo $(which pip)
 pip install docker-py
+python -c "import docker; print(docker.__file__)"
 conda index /anaconda/conda-bld/linux-64 /anaconda/conda-bld/osx-64
 
 # setup bioconda channel
