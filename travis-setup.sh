@@ -2,7 +2,7 @@
 set -e
 set -x
 echo "travis user is $USER"
-if [[ $TRAVIS_OS_NAME = "linux" ]]; then tag="Linux-x86_64"; else tag="MacOSX-x_86_64"; fi
+if [[ $TRAVIS_OS_NAME = "linux" ]]; then tag="Linux-x86_64"; else tag="MacOSX-x86_64"; fi
 # install conda
 curl -O https://repo.continuum.io/miniconda/Miniconda3-latest-${tag}.sh
 sudo bash Miniconda3-latest-${tag}.sh -b -p /anaconda
