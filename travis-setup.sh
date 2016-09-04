@@ -12,7 +12,7 @@ mkdir -p /anaconda/conda-bld/linux-64 # workaround for bug in current conda
 export PATH=/anaconda/bin:$PATH
 #conda install -y --file requirements.txt
 
-export PATH="/anaconda:$PATH"
+export PATH="/anaconda/bin:$PATH"
 
 conda install -y conda-build pip
 echo $(which pip)
