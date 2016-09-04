@@ -6,4 +6,7 @@ sudo: required
 install: bash travis-setup.sh
 services:
 - docker
-script: python conda_build_with_docker.py argh
+script:
+    - echo $(which python)
+    - python -c "import docker; print(docker.__file__)"
+    -  python conda_build_with_docker.py argh
