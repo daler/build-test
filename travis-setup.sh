@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo "travis user is $USER"
 if [[ $TRAVIS_OS_NAME = "linux" ]]; then tag="Linux-x86_64"; else tag="MacOSX-x_86_64"; fi
 # install conda
 curl -O https://repo.continuum.io/miniconda/Miniconda3-latest-${tag}.sh
@@ -9,6 +10,9 @@ mkdir -p /anaconda/conda-bld/osx-64 # workaround for bug in current conda
 mkdir -p /anaconda/conda-bld/linux-64 # workaround for bug in current conda
 export PATH=/anaconda/bin:$PATH
 #conda install -y --file requirements.txt
+
+export PATH="/anaconda:$PATH"
+
 pip install docker-py
 conda index /anaconda/conda-bld/linux-64 /anaconda/conda-bld/osx-64
 
