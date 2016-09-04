@@ -22,13 +22,26 @@ filesystem with the correct permissions.
 
 import os
 import subprocess as sp
-from pprint import pprint
 import pwd
 import grp
 import argparse
 from io import BytesIO
 from docker import Client as DockerClient
 
+def host_conda_build_dir(recipe):
+    """
+    Identifies the conda-bld directory on the host.
+
+    Assumes that conda-build is installed.
+    """
+    return os.path.dirname(
+        os.path.dirname(
+            sp.check_output(
+                ['conda', 'build', recipe, '--output'],
+                universal_newlines=True
+            ).splitlines()[0]
+        )
+    )
 
 class RecipeBuilder(object):
     """
@@ -38,16 +51,18 @@ class RecipeBuilder(object):
         self, tag, base_url='unix://var/run/docker.sock',
         container_recipe='/tmp',
         container_conda_bld='/home/{username}/conda-bld',
+        host_conda_bld=None,
         image='condaforge/linux-anvil',
+        verbose=False,
     ):
         """
         Builds a container based on `image`, adding the local user and group to
         the container.
-        tag:
-            Tag to use for the built container
         """
         self.tag = tag
         self.image = image
+        self.host_conda_bld = host_conda_bld
+        self.verbose = verbose
         uid = os.getuid()
         usr = pwd.getpwuid(uid)
         self.user_info = dict(
@@ -76,19 +91,6 @@ class RecipeBuilder(object):
         self._build = ''.join(i.decode() for i in response)
         return self._build
 
-    def host_conda_build_dir(self, recipe):
-        """
-        Identifies the conda-bld directory on the host
-        """
-        return os.path.dirname(
-            os.path.dirname(
-                sp.check_output(
-                    ['conda', 'build', recipe, '--output'],
-                    universal_newlines=True
-                ).splitlines()[0]
-            )
-        )
-
     def run_docker_cmd(self, cmd, binds=None):
         """
         Run a command in the docker container `tag`
@@ -109,22 +111,29 @@ class RecipeBuilder(object):
 
     def build_recipe(self, recipe):
         recipe = os.path.abspath(recipe)
+
+        _host_conda_bld = self.host_conda_bld
+        if _host_conda_bld is None:
+            _host_conda_bld = host_conda_build_dir(recipe)
+        _host_conda_bld = os.path.abspath(_host_conda_bld)
+
         binds = {
             recipe: {
                 'bind': '/tmp',
                 'mode': 'ro'
             },
-            self.host_conda_build_dir(recipe): {
+            _host_conda_bld: {
                 'bind': self.container_conda_bld,
                 'mode': 'rw'
             },
         }
-        pprint(binds)
+        if self.verbose:
+            print(binds)
         res = self.run_docker_cmd(
             'conda build {0}'.format(self.container_recipe),
             binds=binds,
         )
-        if res['status'] != 0:
+        if (res['status'] != 0) or self.verbose:
             print(res['stderr'])
             print(res['stdout'])
 
@@ -141,12 +150,18 @@ if __name__ == "__main__":
     ap.add_argument('--container-recipe', default='/tmp',
                     help='Mounts the provided recipe in this directory in the container')
     ap.add_argument('--base_url', default='unix://var/run/docker.sock')
+    ap.add_argument('--host-conda-bld', help='Host conda-bld directory. If not '
+                    'specified, then we assume conda-build is installed and we '
+                    'detect automatically')
+    ap.add_argument('--verbose', action='store_true')
     args = ap.parse_args()
     builder = RecipeBuilder(
         tag=args.tag,
         container_recipe=args.container_recipe,
         container_conda_bld=args.container_conda_bld,
         image=args.image,
-        base_url=args.base_url
+        base_url=args.base_url,
+        host_conda_bld=args.host_conda_bld,
+        verbose=args.verbose,
     )
     builder.build_recipe(args.recipe)
