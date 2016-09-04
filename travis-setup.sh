@@ -8,7 +8,8 @@ sudo chown -R $USER /anaconda
 mkdir -p /anaconda/conda-bld/osx-64 # workaround for bug in current conda
 mkdir -p /anaconda/conda-bld/linux-64 # workaround for bug in current conda
 export PATH=/anaconda/bin:$PATH
-conda install -y --file requirements.txt
+#conda install -y --file requirements.txt
+pip install docker-py
 conda index /anaconda/conda-bld/linux-64 /anaconda/conda-bld/osx-64
 
 # setup bioconda channel
