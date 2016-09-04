@@ -3,7 +3,7 @@ os:
 - osx
 language: c
 sudo: required
-install: travis-setup.sh
+install: bash travis-setup.sh
 services:
 - docker
 script: python conda_build_with_docker.py argh
