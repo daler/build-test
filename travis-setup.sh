@@ -29,4 +29,5 @@ conda config --add channels file://anaconda/conda-bld
 #pip install git+https://github.com/bioconda/bioconda-utils.git
 
 echo $(which python)
+echo $PATH
 
