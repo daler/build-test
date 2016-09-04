@@ -9,4 +9,4 @@ services:
 script:
     - echo $(which python)
     - python -c "import docker; print(docker.__file__)"
-    -  python conda_build_with_docker.py argh
+    - python conda_build_with_docker.py argh
