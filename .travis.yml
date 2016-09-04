@@ -8,4 +8,4 @@ services:
 before_script:
     - export PATH=/anaconda/bin:$PATH
 script:
-    - "python conda_build_with_docker.py argh --host_conda_bld /anaconda/conda-bld && conda install -y --channel file:///anaconda/conda-bld --override-channels argh"
+    - "python conda_build_with_docker.py argh --host-conda-bld /anaconda/conda-bld && conda install -y --channel file:///anaconda/conda-bld --override-channels argh"
