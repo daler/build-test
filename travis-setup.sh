@@ -1,5 +1,6 @@
 #!/bin/bash
-
+set -e
+set -x
 echo "travis user is $USER"
 if [[ $TRAVIS_OS_NAME = "linux" ]]; then tag="Linux-x86_64"; else tag="MacOSX-x_86_64"; fi
 # install conda
@@ -13,6 +14,7 @@ export PATH=/anaconda/bin:$PATH
 
 export PATH="/anaconda:$PATH"
 
+conda install conda-build
 pip install docker-py
 conda index /anaconda/conda-bld/linux-64 /anaconda/conda-bld/osx-64
 
@@ -23,3 +25,6 @@ conda config --add channels file://anaconda/conda-bld
 
 # setup bioconda-utils
 #pip install git+https://github.com/bioconda/bioconda-utils.git
+
+echo $(which python)
+
