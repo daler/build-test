@@ -14,7 +14,7 @@ export PATH=/anaconda/bin:$PATH
 
 export PATH="/anaconda:$PATH"
 
-conda install conda-build
+conda install -y conda-build
 pip install docker-py
 conda index /anaconda/conda-bld/linux-64 /anaconda/conda-bld/osx-64
 
