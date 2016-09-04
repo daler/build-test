@@ -10,3 +10,4 @@ before_script:
     - export PATH=/anaconda/bin:$PATH
 script:
     - python conda_build_with_docker.py argh
+    - conda install --channel file:///anaconda/conda-bld --override-channels argh
