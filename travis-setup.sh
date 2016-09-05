@@ -11,4 +11,4 @@ if [[ $TRAVIS_OS_NAME == "linux" ]]; then
     pip install docker-py
 fi
 
-conda install anaconda
+conda install -y anaconda-client
