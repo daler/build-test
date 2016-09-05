@@ -13,3 +13,4 @@ if [[ $TRAVIS_OS_NAME == "linux" ]]; then
 fi
 
 conda install -y anaconda-client
+conda config --add channels https://conda.anaconda.org/t/$ANACONDA_TOKEN/daler
