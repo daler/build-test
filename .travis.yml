@@ -1,5 +1,6 @@
 os:
 - linux
+- osx
 language: c
 sudo: required
 install: bash travis-setup.sh
@@ -8,5 +9,4 @@ services:
 before_script:
     - export PATH=/anaconda/bin:$PATH
 script:
-    - python conda_build_with_docker.py recipes/argh --host-conda-bld /anaconda/conda-bld
-    - conda install -y --channel file:///anaconda/conda-bld --override-channels argh
+    - travis-run.sh
