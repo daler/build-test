@@ -9,4 +9,4 @@ services:
 before_script:
     - export PATH=/anaconda/bin:$PATH
 script:
-    - travis-run.sh
+    - bash travis-run.sh
