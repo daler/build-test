@@ -6,3 +6,5 @@ then
 else
     conda build recipes/argh
 fi
+
+anaconda -t $ANACONDA_TOKEN upload argh

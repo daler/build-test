@@ -7,6 +7,10 @@ install: bash travis-setup.sh
 services:
 - docker
 before_script:
-    - export PATH=/anaconda/bin:$PATH
+- export PATH=/anaconda/bin:$PATH
 script:
-    - bash travis-run.sh
+- bash travis-run.sh
+- bash travis-post-build.sh
+env:
+  global:
+    secure: cMF1ohZIzH8O1e8X+eWm4BKE+9VkeuK+PkMg2P1BLyrwqp6fJCx9SMnSov1xexsivZV0Pd8tb9t2vT+lTwDGbUuHYhkV/TbwvigPB9FCb7Hl0gHrD3pc8XZXZMAd4pvzSG+FF2V1OnPCTFNFDfSMOD5T5ZaG1OFVtozUmxUPf/DGNZWKk/HMbSHVB43/vpPVTiTeLaHmIuFnageacKGX1wBOC2kJ6pGtVyEDchgQ0VOwOaDeaR+xL+Ns/YsPtmbcvlGTZ7p/BdqF8v46BGLCycvkc0qeaIENTNe92Hwph0rq5mIC+GGM7pDr1ZyV47Sv+Po6k9bSZW2cgtB+eG4wdvEjOAy7yUsKxh6xCuD90Csmg5L2HE0zP45BKEUg2PG7OLethtT4xtqLQNsmWi04brjqI7NE2CZomy+lhlXdIkF92SobuVtG3k9TnaA28IThjTBsCVheJwqCs1wdN7w4sHXKBx6SYajYvA+9NHuYCie5G0srue4GKfwU7jQb89rDqG9Y3w8tcHu8tRbbBB1TVNgwWoqVBpv2H7ZEjBhXIOsznxaK9gHsqz8xFH8BO05VP9e5e+rR/VS/P/TN9YdPsBYIo1avxtA1MQ3fu9/AynGrs2jqIkKMJZ4sbnBEHa9zW8MP71xa00NK9hHz6HRmHvpXO3cXzEznGPWc2roD5Rk=
