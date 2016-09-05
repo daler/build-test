@@ -10,4 +10,5 @@ else
     conda build $RECIPE
 fi
 
+conda install -y conda-build
 anaconda -t $ANACONDA_TOKEN upload -u $CONDA_USER $(conda build --output $RECIPE)
